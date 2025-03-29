@@ -1,4 +1,4 @@
-<h1 align="center" style="font-weight: bold;">A Ser Definido</h1>
+<h1 align="center" style="font-weight: bold;">EduCryption</h1>
 
 <div align="center">
     <a>
@@ -16,9 +16,13 @@
 
 <h2 id="about">📌 Sobre</h2>
 
-Este projeto faz parte do Projeto Integrador do 5° semestre do curso de Análise e Desenvolvimento de Sistemas da Fatec Indaiatuba. Seu nome ainda será definido. No entanto, é certo de que se tratará de uma aplicação mobile para auxiliar, através da gamificação, na prática de conceitos de Segurança da Informação, atuando como suporte para a disciplina de mesmo nome.
+
+Este projeto faz parte do Projeto Integrador do 5° semestre do curso de Análise e Desenvolvimento de Sistemas da Fatec Indaiatuba. O EduCryption trata-se de uma aplicação mobile para auxiliar, através da gamificação, na prática de conceitos de Segurança da Informação, atuando como suporte para a disciplina de mesmo nome.
 
 Neste repositório encontra-se a aplicação mobile que é utilizada no projeto.
+
+O back-end pode ser encontrado [aqui](https://github.com/thepaixaosilva/educryption-api).
+
 
 <h2 id="colab">🤝 Contribuidores</h2>
 
@@ -33,7 +37,7 @@ Neste repositório encontra-se a aplicação mobile que é utilizada no projeto.
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/matsilva03">
+      <a href="https://github.com/thepaixaosilva">
         <img src="https://avatars.githubusercontent.com/u/72952802?v=4" width="100px;" alt="Matheus Silva's Profile Picture"/><br>
         <sub>
             <b>Matheus Silva</b>
