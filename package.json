@@ -1,12 +1,14 @@
 {
   "name": "educryption",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "format:check": "prettier --check \"./**/*.{ts,tsx}\"",
+    "format:write": "prettier --write \"./**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.70.0",
