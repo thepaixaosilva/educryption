@@ -2,40 +2,44 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Comment from '../../interfaces/comment';
 import api from '../../services/api';
 
-const createComment = (comment: Comment) =>
+const createComment = (comment: Partial<Comment>) =>
   api.post<Comment>('/comments', comment);
 
-export const useCreateComment = () => {
+export function useCreateComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (comment: Comment) => createComment(comment),
-    onSuccess: () => {
+    mutationFn: createComment,
+    onSuccess: (response) => {
+      const comment = response.data;
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.setQueryData(['comment', comment.id], comment);
     },
   });
-};
+}
 
 const updateComment = (comment: Comment) =>
   api.put<Comment>(`/comments/${comment.id}`, comment);
 
-export const useUpdateComment = () => {
+export function useUpdateComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (comment: Comment) => updateComment(comment),
-    onSuccess: () => {
+    mutationFn: updateComment,
+    onSuccess: (_res, comment) => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({ queryKey: ['comment', comment.id] });
     },
   });
-};
+}
 
-const deleteComment = (id: number) => api.delete<Comment>(`/comments/${id}`);
+const deleteComment = (id: number) => api.delete(`/comments/${id}`);
 
-export const useDeleteComment = () => {
+export function useDeleteComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: number) => deleteComment(id),
-    onSuccess: () => {
+    mutationFn: deleteComment,
+    onSuccess: (_res, id) => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({ queryKey: ['comment', id] });
     },
   });
-};
+}

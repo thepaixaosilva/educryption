@@ -2,8 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUser } from '../hooks/queries/useUser';
 import { useSignIn } from '../hooks/queries/useAuth';
+import { useUser } from '../hooks/queries/useUsers';
 
 type AuthContextType = {
   user: any;

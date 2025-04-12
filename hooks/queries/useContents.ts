@@ -11,3 +11,15 @@ export function useContents() {
     select: (response) => response.data,
   });
 }
+
+export function useContentById(id: string) {
+  return useQuery({
+    queryKey: ['content', id],
+    queryFn: async () => {
+      const { data } = await api.get<Content>(`/contents/${id}`);
+      return data;
+    },
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
+  });
+}

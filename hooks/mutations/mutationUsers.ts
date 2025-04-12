@@ -2,21 +2,23 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import User from '../../interfaces/user';
 import api from '../../services/api';
 
-const createUser = (user: User) => api.post<User>('/users', user);
+const createUser = (user: Partial<User>) => api.post<User>('/users', user);
 
-export const useCreateUser = () => {
+export function useCreateUser() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createUser,
-    onSuccess: () => {
+    onSuccess: (response) => {
+      const user = response.data;
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.setQueryData(['user', user.id], user);
     },
   });
-};
+}
 
 const updateUser = (user: User) => api.put<User>(`/users/${user.id}`, user);
 
-export const useUpdateUser = () => {
+export function useUpdateUser() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateUser,
@@ -25,11 +27,11 @@ export const useUpdateUser = () => {
       queryClient.invalidateQueries({ queryKey: ['user', user.id] });
     },
   });
-};
+}
 
 const deleteUser = (id: number) => api.delete(`/users/${id}`);
 
-export const useDeleteUser = () => {
+export function useDeleteUser() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteUser,
@@ -38,4 +40,4 @@ export const useDeleteUser = () => {
       queryClient.invalidateQueries({ queryKey: ['user', id] });
     },
   });
-};
+}

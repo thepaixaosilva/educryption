@@ -11,3 +11,15 @@ export function useUnits() {
     select: (response) => response.data,
   });
 }
+
+export function useUnitById(id: string) {
+  return useQuery({
+    queryKey: ['unit', id],
+    queryFn: async () => {
+      const { data } = await api.get<Unit>(`/units/${id}`);
+      return data;
+    },
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
+  });
+}

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as SecureStore from 'expo-secure-store';
 import api from '../../services/api';
 
-export const useSignIn = () => {
+export function useSignIn() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -24,4 +24,4 @@ export const useSignIn = () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
-};
+}

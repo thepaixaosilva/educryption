@@ -25,7 +25,7 @@ export function useUser() {
   });
 }
 
-export function useUserById(id: string | number) {
+export function useUserById(id: number) {
   return useQuery({
     queryKey: ['user', id],
     queryFn: async () => {

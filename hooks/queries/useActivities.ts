@@ -4,10 +4,22 @@ import Activity from '../../interfaces/activity';
 
 const fetchActivities = () => api.get<Activity[]>('/activities');
 
-export function useActivitiess() {
+export function useActivities() {
   return useQuery({
     queryKey: ['activities'],
     queryFn: () => fetchActivities(),
     select: (response) => response.data,
+  });
+}
+
+export function useActivityById(id: string) {
+  return useQuery({
+    queryKey: ['activity', id],
+    queryFn: async () => {
+      const { data } = await api.get<Activity>(`/activities/${id}`);
+      return data;
+    },
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
   });
 }

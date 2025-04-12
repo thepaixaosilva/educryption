@@ -11,3 +11,15 @@ export function useComments() {
     select: (response) => response.data,
   });
 }
+
+export function useCommentById(id: string) {
+  return useQuery({
+    queryKey: ['comment', id],
+    queryFn: async () => {
+      const { data } = await api.get<Comment>(`/comments/${id}`);
+      return data;
+    },
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
+  });
+}
