@@ -1,13 +1,15 @@
 import { Text, Pressable, StyleSheet } from "react-native"
+import { TextProps } from "react-native"
 
-interface ClickableWordProps {
+interface ClickableWordProps extends TextProps {
   children: React.ReactNode
   onPress: () => void
+  fontSize?: number
 }
 
-export default function ClickableWord({ children, onPress }: ClickableWordProps) {
+export default function ClickableWord({ children, onPress, fontSize = 16, ...props }: ClickableWordProps) {
   return (
-    <Text onPress={onPress} style={styles.clickable}>
+    <Text onPress={onPress} style={[styles.clickable, { fontSize }]} {...props} >
       {children}
     </Text>
   )
@@ -18,6 +20,6 @@ const styles = StyleSheet.create({
     color: 'blue',
     textDecorationLine: 'underline',
     fontWeight: 'bold',
-    fontFamily: 'Poppins'
+    fontFamily: 'Poppins',
   },
 })
