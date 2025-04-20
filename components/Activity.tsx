@@ -1,4 +1,4 @@
-import { ActivityProvider, useActivity } from '../../contexts/activity';
+import { ActivityProvider, useActivity } from '../contexts/activity';
 import Reward from './activity/Reward';
 import Content from './activity/Content';
 import Header from './activity/Header';

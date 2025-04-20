@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { useActivity } from '../../../contexts/activity';
+import { useActivity } from '../../contexts/activity';
 
 interface StageProps {
   id: number;

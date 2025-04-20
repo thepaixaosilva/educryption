@@ -93,8 +93,8 @@ export default function Input({
         const maskedValue = maskFn
           ? maskFn(limited)
           : mask
-          ? applyMask(limited, mask)
-          : limited;
+            ? applyMask(limited, mask)
+            : limited;
 
         setValue(maskedValue);
         onChangeText?.(maskedValue);

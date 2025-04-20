@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useActivity } from '../../../contexts/activity';
+import { useActivity } from '../../contexts/activity';
 
 interface ActivityRewardProps {
   message?: string;

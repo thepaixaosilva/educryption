@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useActivity } from '../../../contexts/activity';
+import { useActivity } from '../../contexts/activity';
 
 interface ProgressBarProps {
   showPercentage?: boolean;

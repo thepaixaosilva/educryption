@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ProgressBar from './ProgressBar';
-import { useActivity } from '../../../contexts/activity';
+import { useActivity } from '../../contexts/activity';
 
 interface Props {
   title: string;
