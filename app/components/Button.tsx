@@ -1,21 +1,28 @@
 import React, { Children } from 'react';
-import { StyleSheet } from 'react-native';
-import { ButtonProps, Button as PaperButton, Text } from 'react-native-paper';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 
-interface Props extends ButtonProps {
+interface Props extends TouchableOpacityProps {
   color?: string;
   onPress: () => void;
-};
+}
 
-export default function CustomButton({ color = '#d5d5d5', onPress, ...props}: Props) {
+export default function Button({
+  color = '#d5d5d5',
+  onPress,
+  ...props
+}: Props) {
   return (
-    <PaperButton
+    <TouchableOpacity
       style={[styles.button, { backgroundColor: color }]}
       onPress={onPress}
       {...props}
     >
       {props.children}
-    </PaperButton>
+    </TouchableOpacity>
   );
 }
 

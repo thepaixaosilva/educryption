@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { Dimensions, ScrollView, StyleSheet } from 'react-native'
-import { Button, Portal, Dialog } from 'react-native-paper'
+import * as React from 'react';
+import { Dimensions, ScrollView, StyleSheet } from 'react-native';
+import { Button, Portal, Dialog, DialogProps } from 'react-native-paper';
 
-interface ModalProps {
-  visible: boolean
-  onClose: () => void
-  title?: string
-  confirmText?: string
-  onConfirm?: () => void
-  children: React.ReactNode
+interface Props extends DialogProps {
+  visible: boolean;
+  onClose: () => void;
+  title?: string;
+  confirmText?: string;
+  onConfirm?: () => void;
+  children: React.ReactNode;
 }
 
 export default function CustomModal({
@@ -17,8 +17,9 @@ export default function CustomModal({
   title = 'Ajuda',
   confirmText = 'Ok',
   onConfirm,
-  children
-}: ModalProps) {
+  children,
+  ...props
+}: Props) {
   function handleConfirm() {
     if (onConfirm) onConfirm();
     else onClose();
@@ -30,13 +31,12 @@ export default function CustomModal({
         onDismiss={onClose}
         visible={visible}
         style={{ maxHeight: 0.6 * Dimensions.get('window').height }}
+        {...props}
       >
         <Dialog.Title>{title}</Dialog.Title>
         <Dialog.ScrollArea style={styles.smallPadding}>
-          <ScrollView contentContainerStyle={styles.biggerPadding}>
-            <Dialog.Content>
-              {children}
-            </Dialog.Content>
+          <ScrollView contentContainerStyle={styles.mediumPadding}>
+            <Dialog.Content>{children}</Dialog.Content>
           </ScrollView>
         </Dialog.ScrollArea>
         <Dialog.Actions>
@@ -51,7 +51,10 @@ const styles = StyleSheet.create({
   smallPadding: {
     paddingHorizontal: 0,
   },
+  mediumPadding: {
+    paddingHorizontal: 16,
+  },
   biggerPadding: {
     paddingHorizontal: 24,
   },
-})
+});
