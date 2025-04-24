@@ -10,41 +10,41 @@
 </div>
 
 <p align="center">
-    <a href="#about">About</a> •
-    <a href="#install">Installation</a> •
-    <a href="#techs">Technologies</a> •
+    <a href="#about">Sobre</a> •
+    <a href="#install">Instalação</a> •
+    <a href="#techs">Tecnologias</a> •
     <a href="#roadmap">Roadmap</a> •
-    <a href="#colab">Contributors</a> •
-    <a href="#contrib">How to contribute</a>
+    <a href="#colab">Contribuidores</a> •
+    <a href="#contrib">Como contribuir</a>
 </p>
 
-<h2 id="about">📌 About</h2>
+<h2 id="about">📌 Sobre</h2>
 
-This project is part of the Integrated Project of the 5th semester of the Systems Analysis and Development course at Fatec Indaiatuba. EduCryption is a mobile application designed to assist, through gamification, in the practice of Information Security concepts, serving as a companion tool for the course with the same name.
+Este projeto faz parte do Projeto Integrador do 5° semestre do curso de Análise e Desenvolvimento de Sistemas da Fatec Indaiatuba. O EduCryption trata-se de uma aplicação mobile para auxiliar, através da gamificação, na prática de conceitos de Segurança da Informação, atuando como suporte para a disciplina de mesmo nome.
 
-This repository contains the mobile application used in the project.
+Neste repositório encontra-se a aplicação mobile que é utilizada no projeto.
 
-The back-end can be found [here](https://github.com/thepaixaosilva/educryption-api).
+O back-end pode ser encontrado [aqui](https://github.com/thepaixaosilva/educryption-api).
 
-<h2 id="install">🚀 Installation</h2>
+<h2 id="install">🚀 Instalação</h2>
 
 ```bash
-# Clone the repository
+# Clone o repositório
 git clone https://github.com/thepaixaosilva/educryption.git
 
-# Navigate to the folder
+# Acesse a pasta
 cd educryption
 
-# Install dependencies
+# Instale as dependências
 npm install
 
-# Run the app with Expo
+# Rode o app no Expo
 npx expo start
 ```
 
-> 📌 Requirements: Node.js, npm, Expo CLI
+> 📌 Requisitos: Node.js, npm, Expo CLI
 
-<h2 id="techs">⚙️ Technologies</h2>
+<h2 id="techs">⚙️ Tecnologias</h2>
 
 - **React Native + Expo**  
 - **TypeScript**  
@@ -55,11 +55,11 @@ npx expo start
 
 <h2 id="roadmap">📌 Roadmap</h2>
 
-- [ ] Implement reward system  
-- [ ] Create dynamic theme with context  
-- [ ] Adjust UI to use centralized color palette  
+- [ ] Implementar sistema de recompensas  
+- [ ] Criar tema dinâmico com contexto  
+- [ ] Ajustar UI para utilizar paleta de cores centralizada  
 
-<h2 id="colab">🤝 Contributors</h2>
+<h2 id="colab">🤝 Contribuidores</h2>
 
 <table>
   <tr>
@@ -90,18 +90,18 @@ npx expo start
   </tr>
 </table>
 
-<h2 id="contrib">🐛 How to contribute</h2>
+<h2 id="contrib">🐛 Como contribuir</h2>
 
-1. Fork the project  
-2. Create your branch (`git checkout -b feat/my-feature`)  
-3. Commit with clear messages (`git commit -m "feat: new feature"`)  
-4. Push (`git push origin feat/my-feature`)  
-5. Open a Pull Request
+1. Faça um fork  
+2. Crie sua branch (`git checkout -b feat/minha-feature`)  
+3. Commit com mensagens claras (`git commit -m "feat: nova funcionalidade"`)  
+4. Push (`git push origin feat/minha-feature`)  
+5. Abra um Pull Request
 
 ---
 
-### Useful Links
+### Links úteis
 
-- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [React Native Documentation](https://reactnative.dev/)
+- [Convenções de commit](https://www.conventionalcommits.org/pt-br/v1.0.0/)
+- [Documentação do TypeScript](https://www.typescriptlang.org/docs/)
+- [Documentação do React Native](https://reactnative.dev/)
