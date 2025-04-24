@@ -53,6 +53,8 @@ export default function Header({
   );
 }
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
 const styles = StyleSheet.create({
   header: {
     marginBottom: 24,

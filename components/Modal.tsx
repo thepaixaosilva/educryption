@@ -1,3 +1,4 @@
+// TODO: Refactor this component to enhance adaptability
 import * as React from 'react';
 import { Dimensions, ScrollView, StyleSheet } from 'react-native';
 import { Button, Portal, Dialog, DialogProps } from 'react-native-paper';

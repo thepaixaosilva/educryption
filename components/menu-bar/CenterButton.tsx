@@ -3,6 +3,9 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import Icons from '../../assets/icons/Icons';
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
+// TODO: Switch default color to theme color
 const TAB_CONFIG = {
   centerIconSize: 40,
   centerButtonSize: 70,

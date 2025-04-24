@@ -8,6 +8,9 @@ type TabIconProps = {
   focused: boolean;
 };
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
+// TODO: Switch default color to theme color
 const TAB_CONFIG = {
   iconSize: 44,
   colors: {

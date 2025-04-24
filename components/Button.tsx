@@ -10,6 +10,7 @@ interface Props extends TouchableOpacityProps {
   onPress: () => void;
 }
 
+// TODO: Switch default color to theme color
 export default function Button({
   color = '#d5d5d5',
   onPress,

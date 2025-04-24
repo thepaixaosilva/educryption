@@ -20,11 +20,14 @@ export default function ClickableWord({
   );
 }
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
+// TODO: Switch default color to theme color 
 const styles = StyleSheet.create({
   clickable: {
     color: 'blue',
     textDecorationLine: 'underline',
     fontWeight: 'bold',
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins', // TODO: Define the fonts to be used in the app
   },
 });

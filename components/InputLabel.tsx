@@ -17,6 +17,9 @@ function InputLabel({ label, required = false }: InputLabelProps) {
 
 const MemoizedInputLabel = React.memo(InputLabel);
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
+// TODO: Switch colors to theme colors
 const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: 'row',

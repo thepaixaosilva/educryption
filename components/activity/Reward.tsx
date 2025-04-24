@@ -1,3 +1,4 @@
+// TODO: Refactor this component to a success screen or modal, or remove it if not needed
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useActivity } from '../../contexts/activity';

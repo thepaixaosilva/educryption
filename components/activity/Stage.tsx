@@ -137,6 +137,8 @@ export default function Stage({
   );
 }
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
 const styles = StyleSheet.create({
   stage: {
     marginBottom: 20,

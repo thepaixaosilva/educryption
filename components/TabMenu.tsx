@@ -5,6 +5,9 @@ import TabIcon from './menu-bar/TabIcon';
 import CenterButton from './menu-bar/CenterButton';
 import Icons from '../assets/icons/Icons';
 
+// TODO: Create a color palette for the app
+// TODO: Create a theme provider for the app (for dark mode support)
+// TODO: Switch default color to theme color
 const TAB_CONFIG = {
   tabBarHeight: 65,
   colors: {
@@ -14,6 +17,7 @@ const TAB_CONFIG = {
   },
 };
 
+// TODO: Pass router as prop to TabMenu
 export default function TabMenu() {
   return (
     <Tabs
