@@ -11,7 +11,7 @@ import {
   Text,
 } from 'react-native';
 import applyMask from '../utils/inputMasks';
-import PasswordIcon from './icons/PasswordIcon';
+import PasswordIcon from './PasswordIcon';
 import InputLabel from './InputLabel';
 
 interface Props extends TextInputProps {
