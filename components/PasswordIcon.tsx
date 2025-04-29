@@ -1,7 +1,5 @@
 import React from 'react';
-import ShowIcon from '../../../assets/icons/show.svg';
-import HideIcon from '../../../assets/icons/hide.svg';
-
+import Icons from '../assets/icons/Icons';
 interface PasswordIconProps {
   visible: boolean;
   size?: number;
@@ -13,7 +11,7 @@ function PasswordIcon({
   size = 20,
   color = '#888',
 }: PasswordIconProps) {
-  const Icon = visible ? HideIcon : ShowIcon;
+  const Icon = visible ? Icons.Hide : Icons.Show;
   return <Icon width={size} height={size} color={color} />;
 }
 
