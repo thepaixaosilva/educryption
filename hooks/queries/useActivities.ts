@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../services/api';
 import Activity from '../../interfaces/activity';
 
-const fetchActivities = () => api.get<Activity[]>('/activities');
+const fetchActivities = () => api.get<Activity[]>('/api/activities');
 
 export function useActivities() {
   return useQuery({
@@ -16,7 +16,7 @@ export function useActivityById(id: string) {
   return useQuery({
     queryKey: ['activity', id],
     queryFn: async () => {
-      const { data } = await api.get<Activity>(`/activities/${id}`);
+      const { data } = await api.get<Activity>(`/api/activities/${id}`);
       return data;
     },
     enabled: !!id,

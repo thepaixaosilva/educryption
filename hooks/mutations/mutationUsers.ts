@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import User from '../../interfaces/user';
 import api from '../../services/api';
 
-const createUser = (user: Partial<User>) => api.post<User>('/users', user);
+const createUser = (user: Partial<User>) => api.post<User>('/api/users', user);
 
 export function useCreateUser() {
   const queryClient = useQueryClient();
@@ -16,7 +16,7 @@ export function useCreateUser() {
   });
 }
 
-const updateUser = (user: User) => api.put<User>(`/users/${user.id}`, user);
+const updateUser = (user: User) => api.put<User>(`/api/users/${user.id}`, user);
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();
@@ -29,7 +29,7 @@ export function useUpdateUser() {
   });
 }
 
-const deleteUser = (id: number) => api.delete(`/users/${id}`);
+const deleteUser = (id: number) => api.delete(`/api/users/${id}`);
 
 export function useDeleteUser() {
   const queryClient = useQueryClient();

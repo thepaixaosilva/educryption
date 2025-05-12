@@ -13,10 +13,12 @@ export function useSignIn() {
       email: string;
       password: string;
     }) => {
-      const { data } = await api.post('/auth/login', { email, password });
+      const { data } = await api.post('/api/auth/login', { email, password });
 
-      await SecureStore.setItemAsync('access_token', data.token);
-      await SecureStore.setItemAsync('refresh_token', data.refreshToken);
+      await Promise.all([
+        SecureStore.setItemAsync('access_token', data.token),
+        SecureStore.setItemAsync('refresh_token', data.refreshToken),
+      ]);
 
       return data;
     },

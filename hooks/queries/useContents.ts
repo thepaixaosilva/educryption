@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import Content from '../../interfaces/content';
 import api from '../../services/api';
 
-const fetchContents = () => api.get<Content[]>('/contents');
+const fetchContents = () => api.get<Content[]>('/api/contents');
 
 export function useContents() {
   return useQuery({
@@ -16,7 +16,7 @@ export function useContentById(id: string) {
   return useQuery({
     queryKey: ['content', id],
     queryFn: async () => {
-      const { data } = await api.get<Content>(`/contents/${id}`);
+      const { data } = await api.get<Content>(`/api/contents/${id}`);
       return data;
     },
     enabled: !!id,

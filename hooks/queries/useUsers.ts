@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import User from '../../interfaces/user';
 import api from '../../services/api';
 
-const fetchUsers = () => api.get<User[]>('/users');
+const fetchUsers = () => api.get<User[]>('/api/users');
 
 export function useUsers() {
   return useQuery({
@@ -16,12 +16,13 @@ export function useUser() {
   return useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const { data } = await api.get('/auth/me');
+      const { data } = await api.get('/api/auth/me');
+
       return data;
     },
-    retry: false,
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
+    // retry: true,
+    // staleTime: 1000 * 60 * 5,
+    // refetchOnWindowFocus: true,
   });
 }
 
@@ -29,7 +30,7 @@ export function useUserById(id: number) {
   return useQuery({
     queryKey: ['user', id],
     queryFn: async () => {
-      const { data } = await api.get<User>(`/users/${id}`);
+      const { data } = await api.get<User>(`/api/users/${id}`);
       return data;
     },
     enabled: !!id,

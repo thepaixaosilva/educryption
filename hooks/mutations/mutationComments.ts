@@ -3,7 +3,7 @@ import Comment from '../../interfaces/comment';
 import api from '../../services/api';
 
 const createComment = (comment: Partial<Comment>) =>
-  api.post<Comment>('/comments', comment);
+  api.post<Comment>('/api/comments', comment);
 
 export function useCreateComment() {
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ export function useCreateComment() {
 }
 
 const updateComment = (comment: Comment) =>
-  api.put<Comment>(`/comments/${comment.id}`, comment);
+  api.put<Comment>(`/api/comments/${comment.id}`, comment);
 
 export function useUpdateComment() {
   const queryClient = useQueryClient();
@@ -31,7 +31,7 @@ export function useUpdateComment() {
   });
 }
 
-const deleteComment = (id: number) => api.delete(`/comments/${id}`);
+const deleteComment = (id: number) => api.delete(`/api/comments/${id}`);
 
 export function useDeleteComment() {
   const queryClient = useQueryClient();

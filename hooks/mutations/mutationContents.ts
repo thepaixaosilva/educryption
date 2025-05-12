@@ -3,7 +3,7 @@ import Content from '../../interfaces/content';
 import api from '../../services/api';
 
 const createContent = (content: Partial<Content>) =>
-  api.post<Content>('/contents', content);
+  api.post<Content>('/api/contents', content);
 
 export function useCreateContent() {
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ export function useCreateContent() {
 }
 
 const updateContent = (content: Content) =>
-  api.put<Content>(`/contents/${content.id}`, content);
+  api.put<Content>(`/api/contents/${content.id}`, content);
 
 export function useUpdateContent() {
   const queryClient = useQueryClient();
@@ -31,7 +31,7 @@ export function useUpdateContent() {
   });
 }
 
-const deleteContent = (id: number) => api.delete(`/contents/${id}`);
+const deleteContent = (id: number) => api.delete(`/api/contents/${id}`);
 
 export function useDeleteContent() {
   const queryClient = useQueryClient();
