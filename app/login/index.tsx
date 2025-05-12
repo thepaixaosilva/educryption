@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,200 +7,386 @@ import {
   Alert,
   ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TextInput,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../contexts/auth';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CustomModal from '../../components/Modal';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Login() {
+const Login = () => {
   const router = useRouter();
-  const { user, signIn, signOut } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { signIn } = useAuth();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    username: '',
+    fullName: '',
+  });
   const [isRegistering, setIsRegistering] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignIn = async () => {
-    if (email && password) {
-      setIsLoading(true);
-      try {
-        // Simular uma requisição com 1.5 segundos de delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        router.push('/home');
-        // signIn(email, password);
-      } catch (error) {
-        Alert.alert('Erro', 'Ocorreu um erro ao fazer login');
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      Alert.alert('Por favor, preencha email e senha');
-    }
-  };
+  // Refs
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+  const usernameRef = useRef<TextInput>(null);
+  const fullNameRef = useRef<TextInput>(null);
 
-  const handleRegister = () => {
-    if (email && password) {
+  // Handlers
+  const updateField = useCallback((field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const resetForm = useCallback(() => {
+    setFormData({
+      email: '',
+      password: '',
+      username: '',
+      fullName: '',
+    });
+  }, []);
+
+  const handleTabChange = useCallback(
+    (register: boolean) => {
+      setIsRegistering(register);
+      resetForm();
+    },
+    [resetForm],
+  );
+
+  const handleSignIn = useCallback(async () => {
+    const { email, password } = formData;
+
+    if (!email || !password) {
+      Alert.alert('Por favor, preencha email e senha');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Simular uma requisição com 1.5 segundos de delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await signIn(email, password);
+      router.push('/home');
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro ao fazer login');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [formData, signIn, router]);
+
+  const handleRegister = useCallback(() => {
+    const { email, password, username, fullName } = formData;
+
+    if (!email || !password || !username || !fullName) {
+      Alert.alert('Por favor, preencha todos os campos');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
       // Implementar função de registro
       Alert.alert('Registro', 'Função a ser implementada');
-    } else {
-      Alert.alert('Por favor, preencha email e senha');
+    } catch (error) {
+      Alert.alert('Erro', 'Ocorreu um erro ao fazer o registro');
+    } finally {
+      setIsLoading(false);
     }
+  }, [formData]);
+
+  // Estilos dinâmicos
+  const dynamicStyles = {
+    titleSection: {
+      ...styles.titleSection,
+      height: isRegistering
+        ? 0.2 * Dimensions.get('window').height
+        : 0.3 * Dimensions.get('window').height,
+      marginTop: isRegistering ? 10 : 20,
+    },
+    logo: {
+      ...styles.logo,
+      width: isRegistering ? 120 : 180,
+      height: isRegistering ? 120 : 180,
+    },
+    mainSection: {
+      ...styles.mainSection,
+      backgroundColor: '#023E8A',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
+  };
+
+  const renderForgotPassword = () => {
+    if (isRegistering) return null;
+
+    return (
+      <TouchableOpacity
+        onPress={() => setShowForgotPasswordModal(true)}
+        style={styles.forgotPasswordButton}
+      >
+        <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderRegistrationFields = () => {
+    if (!isRegistering) return null;
+
+    return (
+      <>
+        <Input
+          ref={fullNameRef}
+          placeholder="Nome completo"
+          value={formData.fullName}
+          onChangeText={(text) => updateField('fullName', text)}
+          autoCapitalize="words"
+          returnKeyType="next"
+          onSubmitEditing={() => usernameRef.current?.focus()}
+        />
+        <Input
+          ref={usernameRef}
+          placeholder="Nome de usuário"
+          value={formData.username}
+          onChangeText={(text) => updateField('username', text)}
+          autoCapitalize="none"
+          returnKeyType="next"
+          onSubmitEditing={() => emailRef.current?.focus()}
+        />
+      </>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleSection}>
-        <Image
-          source={require('../../assets/images/dudu-default.png')}
-          style={{ width: 100, height: 100 }} // Ajuste o tamanho conforme necessário
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.container}>
+            <View style={dynamicStyles.titleSection}>
+              <Image
+                source={require('../../assets/images/dudu-default.png')}
+                style={dynamicStyles.logo}
+                resizeMode="contain"
+              />
+              <Text style={styles.title}>EduCryption</Text>
+            </View>
+
+            <View
+              style={[
+                styles.tabSection,
+                { width: '90%', marginTop: isRegistering ? 16 : 32 },
+              ]}
+            >
+              {['Entrar', 'Registrar'].map((tab, index) => (
+                <TouchableOpacity
+                  key={tab}
+                  style={[
+                    styles.tab,
+                    index === (isRegistering ? 1 : 0) && styles.activeTab,
+                  ]}
+                  onPress={() => handleTabChange(index === 1)}
+                >
+                  <Text
+                    style={[
+                      styles.tabText,
+                      index === (isRegistering ? 1 : 0) && styles.activeTabText,
+                    ]}
+                  >
+                    {tab}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View style={dynamicStyles.mainSection}>
+              <View style={styles.formContainer}>
+                {renderRegistrationFields()}
+
+                <Input
+                  ref={emailRef}
+                  placeholder="Email"
+                  value={formData.email}
+                  onChangeText={(text) => updateField('email', text)}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  returnKeyType="next"
+                  onSubmitEditing={() => passwordRef.current?.focus()}
+                />
+
+                <Input
+                  ref={passwordRef}
+                  placeholder="Senha"
+                  value={formData.password}
+                  onChangeText={(text) => updateField('password', text)}
+                  isPassword={true}
+                  autoCapitalize="none"
+                  returnKeyType="send"
+                  onSubmitEditing={
+                    isRegistering ? handleRegister : handleSignIn
+                  }
+                />
+
+                {renderForgotPassword()}
+              </View>
+            </View>
+
+            <View style={styles.buttonSection}>
+              <View style={{ width: '90%' }}>
+                <Button
+                  color={isRegistering ? '#28a745' : '#28a745'}
+                  onPress={isRegistering ? handleRegister : handleSignIn}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    <Text style={styles.buttonText}>
+                      {isRegistering ? 'Criar conta' : 'Entrar'}
+                    </Text>
+                  )}
+                </Button>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      <CustomModal
+        visible={showForgotPasswordModal}
+        onClose={() => setShowForgotPasswordModal(false)}
+        title="Recuperar Senha"
+        confirmText="Enviar"
+        style={styles.modal}
+      >
+        <Text style={styles.modalText}>
+          Insira seu email para recuperar sua senha
+        </Text>
+        <Input
+          placeholder="Email"
+          value={formData.email}
+          onChangeText={(text) => updateField('email', text)}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
-        <Text style={styles.title}>EduCryption</Text>
-      </View>
-
-      <View style={styles.mainSection}>
-        <View style={styles.tabSection}>
-          <TouchableOpacity
-            style={[styles.tab, !isRegistering && styles.activeTab]}
-            onPress={() => setIsRegistering(false)}
-          >
-            <Text
-              style={[styles.tabText, !isRegistering && styles.activeTabText]}
-            >
-              Login
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, isRegistering && styles.activeTab]}
-            onPress={() => setIsRegistering(true)}
-          >
-            <Text
-              style={[styles.tabText, isRegistering && styles.activeTabText]}
-            >
-              Registro
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.formContainer}>
-          <Input placeholder="Email" value={email} onChangeText={setEmail} />
-          <Input
-            placeholder="Senha"
-            value={password}
-            onChangeText={setPassword}
-            isPassword={true}
-          />
-
-          {!isRegistering && (
-            <TouchableOpacity
-              onPress={() => {
-                setShowForgotPasswordModal(true);
-              }}
-            >
-              <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
-
-      <View style={styles.buttonSection}>
-        <Button
-          color={isRegistering ? '#28a745' : '#3AC2F2'}
-          onPress={isRegistering ? handleRegister : handleSignIn}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>
-              {isRegistering ? 'Registrar' : 'Entrar'}
-            </Text>
-          )}
-        </Button>
-      </View>
-      {showForgotPasswordModal && (
-        <CustomModal
-          visible={showForgotPasswordModal}
-          onClose={() => setShowForgotPasswordModal(false)}
-          title="Recuperar Senha"
-          confirmText="Enviar"
-          style={styles.modal}
-        >
-          <Text>Insira seu email para recuperar sua senha</Text>
-          <Input placeholder="Email" value={email} onChangeText={setEmail} />
-        </CustomModal>
-      )}
-    </View>
+      </CustomModal>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    // paddingHorizontal: 24,
+  },
   titleSection: {
-    flexDirection: 'row',
-    height: '30%',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  logo: {
+    // As dimensões serão definidas dinamicamente
+  },
+  title: {
+    fontSize: 36,
+    color: '#336699',
+    fontFamily: 'LilitaOne-Regular',
+    marginBottom: 8,
+  },
   mainSection: {
-    height: '50%',
+    flex: 1,
     paddingHorizontal: 24,
   },
   tabSection: {
     flexDirection: 'row',
-    marginBottom: 24,
+    marginBottom: 32,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 4,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    alignSelf: 'center',
   },
   tab: {
     flex: 1,
     paddingVertical: 12,
     alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: '#e0e0e0',
+    borderRadius: 8,
   },
   activeTab: {
-    borderBottomColor: '#3AC2F2',
+    backgroundColor: '#023E8A',
   },
   tabText: {
     fontSize: 16,
     color: '#666',
+    fontFamily: 'Poppins-Medium',
   },
   activeTabText: {
-    color: '#336699',
-    fontWeight: '600',
+    color: '#fff',
+    fontFamily: 'Poppins-SemiBold',
   },
   formContainer: {
     width: '100%',
+    gap: 16,
+    backgroundColor: '#023E8A',
+    marginTop: 16,
+    marginBottom: 16,
+  },
+  forgotPasswordButton: {
+    alignSelf: 'flex-end',
+    padding: 4,
   },
   forgotPassword: {
-    color: '#336699',
-    textAlign: 'right',
-    marginTop: 8,
+    color: '#f5f5f5',
     fontSize: 14,
+    fontFamily: 'Poppins-Medium',
   },
   buttonSection: {
-    height: '20%',
-    justifyContent: 'flex-end',
-    paddingBottom: 32,
-    paddingHorizontal: 24,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#336699',
-    fontFamily: 'LilitaOne-Regular',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#023E8A',
+    paddingVertical: 24,
   },
   buttonText: {
-    color: '#f3f3f3',
+    color: '#fff',
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'Poppins-SemiBold',
   },
   modal: {
-    maxHeight: '60%',
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#fff',
+  },
+  modalText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 16,
+    fontFamily: 'Poppins-Regular',
+    textAlign: 'center',
   },
 });
+
+export default Login;
