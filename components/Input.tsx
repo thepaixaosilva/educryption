@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  forwardRef,
+} from 'react';
 import {
   TextInput,
   View,
@@ -45,172 +51,179 @@ interface Props extends TextInputProps {
   onEnter?: () => void;
 }
 
-export default function Input({
-  // Style props
-  style,
-  width,
-  height,
-  backgroundColor,
-  fontSize,
-  textAlign,
-
-  // Functional props
-  label,
-  error,
-  isPassword,
-  required = false,
-  clearable = false,
-
-  // Mask props
-  mask,
-  maskFn,
-
-  // Content props
-  startContent,
-  endContent,
-
-  // Callback props
-  onChangeText,
-  validation,
-  onTab,
-  onEnter,
-
-  ...props
-}: Props) {
-  const [visible, setVisible] = useState(false);
-  const [value, setValue] = useState('');
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [localError, setLocalError] = useState<string | undefined>(error);
-  const inputRef = useRef<TextInput>(null);
-
-  const handleTextChange = useCallback(
-    (text: string) => {
-      if (mask || maskFn) {
-        const rawValue = text.replace(/[^0-9]/g, '');
-        const maxDigits = mask ? (mask.match(/#/g) || []).length : undefined;
-        const limited = maxDigits ? rawValue.slice(0, maxDigits) : rawValue;
-
-        const maskedValue = maskFn
-          ? maskFn(limited)
-          : mask
-            ? applyMask(limited, mask)
-            : limited;
-
-        setValue(maskedValue);
-        onChangeText?.(maskedValue);
-
-        if (validation) {
-          const isValid = validation(maskedValue);
-          setShowErrorMessage(!isValid);
-          setLocalError(!isValid ? error || 'Campo inválido' : undefined);
-        }
-      } else {
-        setValue(text);
-        onChangeText?.(text);
-
-        if (validation) {
-          const isValid = validation(text);
-          setShowErrorMessage(!isValid);
-          setLocalError(!isValid ? error || 'Campo inválido' : undefined);
-        }
-      }
-    },
-    [mask, maskFn, validation, error, onChangeText],
-  );
-
-  const handleKeyPress = (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>,
-  ) => {
-    const key = e.nativeEvent.key;
-    if (key === 'Tab' && onTab) {
-      onTab();
-      return;
-    }
-
-    if (key === 'Enter' && onEnter) {
-      onEnter();
-      Keyboard.dismiss();
-      return;
-    }
-  };
-
-  const handleClear = () => {
-    setValue('');
-    onChangeText?.('');
-    setShowErrorMessage(false);
-    setLocalError(undefined);
-  };
-
-  const wrapperStyles = useMemo(
-    () => [
-      styles.inputWrapper,
-      showErrorMessage || error ? styles.inputWrapperError : null,
-      backgroundColor ? { backgroundColor } : null,
-      height ? { height } : null,
-    ],
-    [showErrorMessage, error, backgroundColor, height],
-  );
-
-  const inputStyles = useMemo(
-    () => [
-      styles.input,
+const Input = forwardRef<TextInput, Props>(
+  (
+    {
+      // Style props
       style,
-      fontSize ? { fontSize } : null,
-      textAlign ? { textAlign } : null,
-    ],
-    [style, fontSize, textAlign],
-  );
+      width,
+      height,
+      backgroundColor,
+      fontSize,
+      textAlign,
 
-  return (
-    <View style={styles.container}>
-      {label && <InputLabel label={label} required={required} />}
+      // Functional props
+      label,
+      error,
+      isPassword,
+      required = false,
+      clearable = false,
 
-      <View style={wrapperStyles}>
-        {startContent && (
-          <View style={styles.contentContainer}>{startContent}</View>
-        )}
+      // Mask props
+      mask,
+      maskFn,
 
-        <TextInput
-          ref={inputRef}
-          value={value}
-          style={inputStyles}
-          placeholderTextColor="#888"
-          secureTextEntry={isPassword && !visible}
-          autoCapitalize="none"
-          onChangeText={handleTextChange}
-          onKeyPress={handleKeyPress}
-          {...props}
-        />
+      // Content props
+      startContent,
+      endContent,
 
-        <View style={styles.endContentContainer}>
-          {clearable && value !== '' && (
-            <TouchableOpacity onPress={handleClear} style={styles.clearButton}>
-              <Text style={styles.clearButtonText}>✕</Text>
-            </TouchableOpacity>
+      // Callback props
+      onChangeText,
+      validation,
+      onTab,
+      onEnter,
+
+      ...props
+    }: Props,
+    ref,
+  ) => {
+    const [visible, setVisible] = useState(false);
+    const [value, setValue] = useState('');
+    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [localError, setLocalError] = useState<string | undefined>(error);
+
+    const handleTextChange = useCallback(
+      (text: string) => {
+        if (mask || maskFn) {
+          const rawValue = text.replace(/[^0-9]/g, '');
+          const maxDigits = mask ? (mask.match(/#/g) || []).length : undefined;
+          const limited = maxDigits ? rawValue.slice(0, maxDigits) : rawValue;
+
+          const maskedValue = maskFn
+            ? maskFn(limited)
+            : mask
+              ? applyMask(limited, mask)
+              : limited;
+
+          setValue(maskedValue);
+          onChangeText?.(maskedValue);
+
+          if (validation) {
+            const isValid = validation(maskedValue);
+            setShowErrorMessage(!isValid);
+            setLocalError(!isValid ? error || 'Campo inválido' : undefined);
+          }
+        } else {
+          setValue(text);
+          onChangeText?.(text);
+
+          if (validation) {
+            const isValid = validation(text);
+            setShowErrorMessage(!isValid);
+            setLocalError(!isValid ? error || 'Campo inválido' : undefined);
+          }
+        }
+      },
+      [mask, maskFn, validation, error, onChangeText],
+    );
+
+    const handleKeyPress = (
+      e: NativeSyntheticEvent<TextInputKeyPressEventData>,
+    ) => {
+      const key = e.nativeEvent.key;
+      if (key === 'Tab' && onTab) {
+        onTab();
+        return;
+      }
+
+      if (key === 'Enter' && onEnter) {
+        onEnter();
+        Keyboard.dismiss();
+        return;
+      }
+    };
+
+    const handleClear = () => {
+      setValue('');
+      onChangeText?.('');
+      setShowErrorMessage(false);
+      setLocalError(undefined);
+    };
+
+    const wrapperStyles = useMemo(
+      () => [
+        styles.inputWrapper,
+        showErrorMessage || error ? styles.inputWrapperError : null,
+        backgroundColor ? { backgroundColor } : null,
+        height ? { height } : null,
+      ],
+      [showErrorMessage, error, backgroundColor, height],
+    );
+
+    const inputStyles = useMemo(
+      () => [
+        styles.input,
+        style,
+        fontSize ? { fontSize } : null,
+        textAlign ? { textAlign } : null,
+      ],
+      [style, fontSize, textAlign],
+    );
+
+    return (
+      <View style={styles.container}>
+        {label && <InputLabel label={label} required={required} />}
+
+        <View style={wrapperStyles}>
+          {startContent && (
+            <View style={styles.contentContainer}>{startContent}</View>
           )}
 
-          {isPassword && (
-            <TouchableOpacity
-              onPress={() => setVisible(!visible)}
-              style={styles.visibilityToggle}
-              accessibilityLabel={visible ? 'Ocultar senha' : 'Mostrar senha'}
-            >
-              <PasswordIcon visible={visible} />
-            </TouchableOpacity>
-          )}
+          <TextInput
+            ref={ref}
+            value={value}
+            style={inputStyles}
+            placeholderTextColor="#888"
+            secureTextEntry={isPassword && !visible}
+            autoCapitalize="none"
+            onChangeText={handleTextChange}
+            onKeyPress={handleKeyPress}
+            {...props}
+          />
 
-          {endContent && (
-            <View style={styles.contentContainer}>{endContent}</View>
-          )}
+          <View style={styles.endContentContainer}>
+            {clearable && value !== '' && (
+              <TouchableOpacity
+                onPress={handleClear}
+                style={styles.clearButton}
+              >
+                <Text style={styles.clearButtonText}>✕</Text>
+              </TouchableOpacity>
+            )}
+
+            {isPassword && (
+              <TouchableOpacity
+                onPress={() => setVisible(!visible)}
+                style={styles.visibilityToggle}
+                accessibilityLabel={visible ? 'Ocultar senha' : 'Mostrar senha'}
+              >
+                <PasswordIcon visible={visible} />
+              </TouchableOpacity>
+            )}
+
+            {endContent && (
+              <View style={styles.contentContainer}>{endContent}</View>
+            )}
+          </View>
         </View>
-      </View>
 
-      {(showErrorMessage || localError) && (
-        <Text style={styles.error}>{localError}</Text>
-      )}
-    </View>
-  );
-}
+        {(showErrorMessage || localError) && (
+          <Text style={styles.error}>{localError}</Text>
+        )}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -225,6 +238,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     minHeight: 48,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   inputWrapperError: {
     borderColor: 'red',
@@ -258,3 +277,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+
+export default Input;
