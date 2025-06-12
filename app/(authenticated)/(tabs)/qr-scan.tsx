@@ -38,7 +38,7 @@ export default function qrScan() {
       </Pressable>
 
       <Pressable
-        onPress={() => router.replace("/(auhenticated)/camera-qr-scan")}
+        onPress={() => router.replace("/(authenticated)/camera-qr-scan")}
         style={[
           styles.button,
           styles.yellowButton,
