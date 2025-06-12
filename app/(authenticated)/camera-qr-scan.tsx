@@ -32,7 +32,7 @@ export default function qrScanCamera() {
         {
           text: "OK", onPress: () => {
             setHasScanned(false)
-            router.replace("./qr-scan")
+            router.replace("/(authenticated)/(tabs)/qr-scan")
             desbloquearAtividade(data)
           }
         }
