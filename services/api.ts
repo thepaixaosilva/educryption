@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { router } from 'expo-router';
 
-const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3030';
+const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
 
 const api = axios.create({
   baseURL: apiUrl,
@@ -11,7 +11,6 @@ const api = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  validateStatus: (status) => status < 500,
 });
 
 let isRefreshing = false;
@@ -62,9 +61,16 @@ api.interceptors.response.use(
       try {
         const refreshToken = await SecureStore.getItemAsync('refresh_token');
 
-        const { data } = await axios.post(`${apiUrl}/auth/refresh`, {
-          refreshToken,
+        const response = await fetch(`${apiUrl}/api/auth/refresh`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refreshToken}`,
+          },
+          body: JSON.stringify({}),
         });
+
+        const data = await response.json();
 
         const { token: accessToken, refreshToken: newRefreshToken } = data;
 
@@ -74,6 +80,7 @@ api.interceptors.response.use(
         processQueue(null, accessToken);
 
         originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        
         return api(originalRequest);
       } catch (err) {
         processQueue(err, null);
