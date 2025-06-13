@@ -50,7 +50,7 @@ export default function qrScan() {
       </Pressable>
 
       {/* Link para home */}
-      <Pressable onPress={() => router.replace("/")}>
+      <Pressable onPress={() => router.replace("/(authenticated)/(tabs)/home")}>
         <Text style={styles.homeLink}>Voltar para Home</Text>
       </Pressable>
     </SafeAreaView>
