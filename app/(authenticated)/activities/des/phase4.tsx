@@ -116,7 +116,7 @@ const ActivityContent: React.FC<ActivityContentProps> = ({ initialStages }) => {
       const json = await AsyncStorage.getItem('atividadesDesbloqueadas')
       const desbloqueadas = json ? JSON.parse(json) : []
 
-      if (!desbloqueadas.includes('DES Fase 4: P-Box')) { //nome da atividade extraída do QR Code
+      if (!desbloqueadas.includes('2ª Fase DES - Função 4: P-Box')) { //nome da atividade extraída do QR Code
         Alert.alert(
           'Atividade bloqueada',
           'Você precisa escanear o QR Code para desbloquear esta atividade.',

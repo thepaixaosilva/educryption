@@ -6,10 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // não é usado no código, coloquei só pra controle interno kkk
 const todasAtividades = [
-  { titulo: 'DES Fase 1: Expansão' },
-  { titulo: 'DES Fase 2: XOR' },
-  { titulo: 'DES Fase 3: S-Box' },
-  { titulo: 'DES Fase 4: P-Box' },
+  { titulo: '2ª Fase DES - Função 1: Expansão' },
+  { titulo: '2ª Fase DES - Função 2: XOR' },
+  { titulo: '2ª Fase DES - Função 3: S-Box' },
+  { titulo: '2ª Fase DES - Função 4: P-Box' },
 ]
 
 export default function qrScanCamera() {
@@ -32,7 +32,7 @@ export default function qrScanCamera() {
         {
           text: "OK", onPress: () => {
             setHasScanned(false)
-            router.replace("/(authenticated)/(tabs)/qr-scan")
+            router.replace("/(authenticated)/units/des")
             desbloquearAtividade(data)
           }
         }
