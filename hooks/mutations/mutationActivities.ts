@@ -3,7 +3,7 @@ import Activity from '../../interfaces/activity';
 import api from '../../services/api';
 
 const createActivity = (activity: Partial<Activity>) =>
-  api.post<Activity>('/activities', activity);
+  api.post<Activity>('/api/activities', activity);
 
 export function useCreateActivity() {
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ export function useCreateActivity() {
 }
 
 const updateActivity = (activity: Activity) =>
-  api.put<Activity>(`/activities/${activity.id}`, activity);
+  api.put<Activity>(`/api/activities/${activity.id}`, activity);
 
 export function useUpdateActivity() {
   const queryClient = useQueryClient();
@@ -31,7 +31,7 @@ export function useUpdateActivity() {
   });
 }
 
-const deleteActivity = (id: number) => api.delete(`/activities/${id}`);
+const deleteActivity = (id: number) => api.delete(`/api/activities/${id}`);
 
 export function useDeleteActivity() {
   const queryClient = useQueryClient();

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Unit from '../../interfaces/unit';
 import api from '../../services/api';
 
-const createUnit = (unit: Partial<Unit>) => api.post<Unit>('/units', unit);
+const createUnit = (unit: Partial<Unit>) => api.post<Unit>('/api/units', unit);
 
 export function useCreateUnit() {
   const queryClient = useQueryClient();
@@ -16,7 +16,7 @@ export function useCreateUnit() {
   });
 }
 
-const updateUnit = (unit: Unit) => api.put<Unit>(`/units/${unit.id}`, unit);
+const updateUnit = (unit: Unit) => api.put<Unit>(`/api/units/${unit.id}`, unit);
 
 export function useUpdateUnit() {
   const queryClient = useQueryClient();
@@ -29,7 +29,7 @@ export function useUpdateUnit() {
   });
 }
 
-const deleteUnit = (id: number) => api.delete(`/units/${id}`);
+const deleteUnit = (id: number) => api.delete(`/api/units/${id}`);
 
 export function useDeleteUnit() {
   const queryClient = useQueryClient();
