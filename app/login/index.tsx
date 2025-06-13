@@ -19,6 +19,8 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CustomModal from '../../components/Modal';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import api from '../../services/api';
+import axios from 'axios';
 
 const Login = () => {
   const router = useRouter();
@@ -82,7 +84,7 @@ const Login = () => {
     }
   }, [formData, signIn, router]);
 
-  const handleRegister = useCallback(() => {
+  const handleRegister = useCallback(async () => {
     const { email, password, username, fullName } = formData;
 
     if (!email || !password || !username || !fullName) {
@@ -92,10 +94,19 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      // Implementar função de registro
-      Alert.alert('Registro', 'Função a ser implementada');
-    } catch (error) {
-      Alert.alert('Erro', 'Ocorreu um erro ao fazer o registro');
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/api/users`, {
+        email,
+        password,
+        username,
+        fullName,
+      });
+
+      Alert.alert('Sucesso', 'Usuário registrado com sucesso!');
+    } catch (err) {
+      console.error('Erro no registro:', err);
+      const message =
+        (err as any)?.response?.data?.message || 'Erro ao registrar';
+      Alert.alert('Erro', message);
     } finally {
       setIsLoading(false);
     }
