@@ -22,7 +22,7 @@ export default function Reward({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Atividade Concluída!</Text>
+      <Text style={styles.title}>Etapa Concluída!</Text>
 
       {imageSrc && <Image source={imageSrc} style={styles.image} />}
 
