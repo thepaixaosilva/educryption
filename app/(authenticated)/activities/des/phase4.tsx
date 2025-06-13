@@ -146,7 +146,7 @@ const ActivityContent: React.FC<ActivityContentProps> = ({ initialStages }) => {
       >
         <TouchableOpacity
           style={styles.homeButton}
-          onPress={() => router.push('/')}
+          onPress={() => router.push('/(authenticated)/(tabs)/home')}
         >
           <Text style={styles.homeButtonText}>Voltar para Home</Text>
         </TouchableOpacity>
