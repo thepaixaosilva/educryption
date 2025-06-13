@@ -6,12 +6,26 @@ export default function AuthenticatedLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const checkAuth = async () => {
-      const token = await SecureStore.getItemAsync('access_token');
-      setIsLoggedIn(!!token);
+      try {
+        const token = await SecureStore.getItemAsync('access_token');
+        if (isMounted) {
+          setIsLoggedIn(!!token);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setIsLoggedIn(false);
+        }
+      }
     };
 
     checkAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (isLoggedIn === null) {
@@ -22,5 +36,11 @@ export default function AuthenticatedLayout() {
     return <Redirect href="/login" />;
   }
 
-  return <Stack />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false
+      }}
+    />
+  );
 }

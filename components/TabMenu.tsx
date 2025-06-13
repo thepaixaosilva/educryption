@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs } from 'expo-router';
 import TabIcon from './menu-bar/TabIcon';
 import CenterButton from './menu-bar/CenterButton';
+import AppDrawer from './AppDrawer';
 import Icons from '../assets/icons/Icons';
 
 // TODO: Create a color palette for the app
@@ -17,61 +18,87 @@ const TAB_CONFIG = {
   },
 };
 
-// TODO: Pass router as prop to TabMenu
 export default function TabMenu() {
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+
+  const toggleDrawer = useCallback(() => {
+    setIsDrawerVisible((prev) => !prev);
+  }, []);
+
+  const closeDrawer = useCallback(() => {
+    setIsDrawerVisible(false);
+  }, []);
+
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: TAB_CONFIG.colors.white,
-        tabBarInactiveTintColor: TAB_CONFIG.colors.inactive,
-        tabBarStyle: styles.tabBar,
-        tabBarShowLabel: false,
-        headerShown: false,
-        tabBarItemStyle: styles.tabBarItem,
-      }}
-    >
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: 'Início',
-          tabBarIcon: (props) => <TabIcon icon={Icons.Home} {...props} />,
-        }}
-      />
+    <>
+      <AppDrawer visible={isDrawerVisible} onClose={closeDrawer} />
 
-      <Tabs.Screen
-        name="qr-scan"
-        options={{
-          title: 'Scan QR',
-          tabBarIcon: (props) => <TabIcon icon={Icons.Qr} {...props} />,
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: TAB_CONFIG.colors.white,
+          tabBarInactiveTintColor: TAB_CONFIG.colors.inactive,
+          tabBarStyle: styles.tabBar,
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarItemStyle: styles.tabBarItem,
         }}
-      />
+      >
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: 'Início',
+            tabBarIcon: (props) => <TabIcon icon={Icons.Home} {...props} />,
+            headerShown: false,
+          }}
+        />
 
-      <Tabs.Screen
-        name="center-button"
-        options={{
-          tabBarButton: () => <CenterButton />,
-        }}
-        listeners={{
-          tabPress: (e) => e.preventDefault(),
-        }}
-      />
+        <Tabs.Screen
+          name="qr-scan"
+          options={{
+            title: 'Scan QR',
+            tabBarIcon: (props) => <TabIcon icon={Icons.Qr} {...props} />,
+            headerShown: false,
+          }}
+        />
 
-      <Tabs.Screen
-        name="user"
-        options={{
-          title: 'Perfil',
-          tabBarIcon: (props) => <TabIcon icon={Icons.Usr} {...props} />,
-        }}
-      />
+        <Tabs.Screen
+          name="center-button"
+          options={{
+            tabBarButton: () => <CenterButton />,
+            headerShown: false,
+          }}
+          listeners={{
+            tabPress: (e) => e.preventDefault(),
+          }}
+        />
 
-      <Tabs.Screen
-        name="more"
-        options={{
-          title: 'Mais',
-          tabBarIcon: (props) => <TabIcon icon={Icons.ThreeDots} {...props} />,
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="user"
+          options={{
+            title: 'Perfil',
+            tabBarIcon: (props) => <TabIcon icon={Icons.Usr} {...props} />,
+            headerShown: false,
+          }}
+        />
+
+        <Tabs.Screen
+          name="more"
+          options={{
+            title: 'Mais',
+            tabBarIcon: (props) => (
+              <TabIcon icon={Icons.ThreeDots} {...props} />
+            ),
+            headerShown: false,
+          }}
+          listeners={{
+            tabPress: (e) => {
+              e.preventDefault();
+              setIsDrawerVisible(true);
+            },
+          }}
+        />
+      </Tabs>
+    </>
   );
 }
 

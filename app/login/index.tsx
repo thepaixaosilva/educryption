@@ -72,7 +72,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       // Simular uma requisição com 1.5 segundos de delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // await new Promise((resolve) => setTimeout(resolve, 1500));
       await signIn(email, password);
       router.push('/home');
     } catch (error) {
