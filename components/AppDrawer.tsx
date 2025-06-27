@@ -76,10 +76,10 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
 
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => handleNavigate('/user')}
+            onPress={() => router.replace("/(authenticated)/aboutUs/about-us")}
           >
             <Icons.Usr width={24} height={24} color="#333" />
-            <Text style={styles.menuText}>Perfil</Text>
+            <Text style={styles.menuText}>Sobre nós</Text>
           </TouchableOpacity>
 
           <View style={styles.separator} />
@@ -92,8 +92,8 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
               router.replace('/login');
             }}
           >
-            <Icons.Cross width={24} height={24} color="#ff4444" />
-            <Text style={[styles.menuText, { color: '#ff4444' }]}>Sair</Text>
+            <Icons.Logout width={24} height={24} color="#ff4444" />
+            <Text style={[styles.menuText, { color: '#ff4444' }]}>Sair da conta</Text>
           </TouchableOpacity>
         </ScrollView>
       </Animated.View>
