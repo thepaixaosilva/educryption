@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { Tabs } from 'expo-router';
 import TabIcon from './menu-bar/TabIcon';
-import CenterButton from './menu-bar/CenterButton';
 import AppDrawer from './AppDrawer';
 import Icons from '../assets/icons/Icons';
 
@@ -58,17 +57,6 @@ export default function TabMenu() {
             title: 'Scan QR',
             tabBarIcon: (props) => <TabIcon icon={Icons.Qr} {...props} />,
             headerShown: false,
-          }}
-        />
-
-        <Tabs.Screen
-          name="center-button"
-          options={{
-            tabBarButton: () => <CenterButton />,
-            headerShown: false,
-          }}
-          listeners={{
-            tabPress: (e) => e.preventDefault(),
           }}
         />
 

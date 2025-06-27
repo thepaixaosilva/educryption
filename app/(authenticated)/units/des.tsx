@@ -28,7 +28,7 @@ const Home = () => {
 
         <TouchableOpacity
           style={styles.unitBox}
-          onPress={() => router.replace('/(authenticated)/activities/des/phase1')}
+          onPress={() => router.replace('/(authenticated)/activities/des/function1')}
         >
           <MaterialIcons name="lock-open" size={28} color="#fff" style={styles.icon} />
           <Text style={styles.unitText}>2ª Fase DES - Função 1: Expansão</Text>
@@ -36,7 +36,7 @@ const Home = () => {
 
         <TouchableOpacity
           style={styles.unitBox}
-          onPress={() => router.replace('/(authenticated)/activities/des/phase2')}
+          onPress={() => router.replace('/(authenticated)/activities/des/function2')}
         >
           <MaterialIcons name="lock-open" size={28} color="#fff" style={styles.icon} />
           <Text style={styles.unitText}>2ª Fase DES - Função 2: XOR</Text>
@@ -44,7 +44,7 @@ const Home = () => {
 
         <TouchableOpacity
           style={styles.unitBox}
-          onPress={() => router.replace('/(authenticated)/activities/des/phase3')}
+          onPress={() => router.replace('/(authenticated)/activities/des/function3')}
         >
           <MaterialIcons name="lock-open" size={28} color="#fff" style={styles.icon} />
           <Text style={styles.unitText}>2ª Fase DES - Função 3: S-Box</Text>
@@ -52,7 +52,7 @@ const Home = () => {
 
         <TouchableOpacity
           style={styles.unitBox}
-          onPress={() => router.replace('/(authenticated)/activities/des/phase4')}
+          onPress={() => router.replace('/(authenticated)/activities/des/function4')}
         >
           <MaterialIcons name="lock-open" size={28} color="#fff" style={styles.icon} />
           <Text style={styles.unitText}>2ª Fase DES - Função 4: P-Box</Text>

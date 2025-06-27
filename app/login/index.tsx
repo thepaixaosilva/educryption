@@ -29,7 +29,7 @@ const Login = () => {
     email: '',
     password: '',
     username: '',
-    fullName: '',
+    full_name: '',
   });
   const [isRegistering, setIsRegistering] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -51,7 +51,7 @@ const Login = () => {
       email: '',
       password: '',
       username: '',
-      fullName: '',
+      full_name: '',
     });
   }, []);
 
@@ -85,9 +85,9 @@ const Login = () => {
   }, [formData, signIn, router]);
 
   const handleRegister = useCallback(async () => {
-    const { email, password, username, fullName } = formData;
+    const { email, password, username, full_name } = formData;
 
-    if (!email || !password || !username || !fullName) {
+    if (!email || !password || !username || !full_name) {
       Alert.alert('Por favor, preencha todos os campos');
       return;
     }
@@ -98,7 +98,7 @@ const Login = () => {
         email,
         password,
         username,
-        fullName,
+        full_name,
       });
 
       Alert.alert('Sucesso', 'Usuário registrado com sucesso!');
@@ -155,8 +155,8 @@ const Login = () => {
         <Input
           ref={fullNameRef}
           placeholder="Nome completo"
-          value={formData.fullName}
-          onChangeText={(text) => updateField('fullName', text)}
+          value={formData.full_name}
+          onChangeText={(text) => updateField('full_name', text)}
           autoCapitalize="words"
           returnKeyType="next"
           onSubmitEditing={() => usernameRef.current?.focus()}

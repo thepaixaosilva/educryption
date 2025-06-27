@@ -46,18 +46,18 @@ npx expo start
 
 <h2 id="techs">⚙️ Technologies</h2>
 
-- **React Native + Expo**  
-- **TypeScript**  
-- **React Navigation**  
-- **React Query**  
-- **SecureStore**  
+- **React Native + Expo**
+- **TypeScript**
+- **React Navigation**
+- **React Query**
+- **SecureStore**
 - **React Native Paper**
 
 <h2 id="roadmap">📌 Roadmap</h2>
 
-- [ ] Implement reward system  
-- [ ] Create dynamic theme with context  
-- [ ] Adjust UI to use centralized color palette  
+- [ ] Implement reward system
+- [ ] Create dynamic theme with context
+- [ ] Adjust UI to use centralized color palette
 
 <h2 id="colab">🤝 Contributors</h2>
 
@@ -92,10 +92,10 @@ npx expo start
 
 <h2 id="contrib">🐛 How to contribute</h2>
 
-1. Fork the project  
-2. Create your branch (`git checkout -b feat/my-feature`)  
-3. Commit with clear messages (`git commit -m "feat: new feature"`)  
-4. Push (`git push origin feat/my-feature`)  
+1. Fork the project
+2. Create your branch (`git checkout -b feat/my-feature`)
+3. Commit with clear messages (`git commit -m "feat: new feature"`)
+4. Push (`git push origin feat/my-feature`)
 5. Open a Pull Request
 
 ---
@@ -105,3 +105,4 @@ npx expo start
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [React Native Documentation](https://reactnative.dev/)
+

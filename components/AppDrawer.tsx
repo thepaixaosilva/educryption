@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../contexts/auth';
+import { useUser } from '../hooks/queries/useUsers'; // Importa o hook
 import Icons from '../assets/icons/Icons';
 
 const { width } = Dimensions.get('window');
@@ -23,6 +24,7 @@ interface AppDrawerProps {
 export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
   const router = useRouter();
   const { signOut } = useAuth();
+  const { data: user, isLoading } = useUser(); // Usa o hook para buscar o usuário
   const translateX = React.useRef(new Animated.Value(DRAWER_WIDTH)).current;
 
   React.useEffect(() => {
@@ -58,10 +60,16 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
           <View style={styles.header}>
             <View style={styles.userInfo}>
               <View style={styles.avatar}>
-                <Text style={styles.avatarText}>U</Text>
+                <Text style={styles.avatarText}>
+                  {user?.full_name?.charAt(0)?.toUpperCase() || 'U'}
+                </Text>
               </View>
-              <Text style={styles.userName}>Usuário EduCryption</Text>
-              <Text style={styles.userEmail}>usuario@educryption.com</Text>
+              <Text style={styles.userName}>
+                {isLoading ? 'Carregando...' : user?.full_name || 'Usuário'}
+              </Text>
+              <Text style={styles.userEmail}>
+                {isLoading ? '' : user?.email || 'usuario@educryption.com'}
+              </Text>
             </View>
           </View>
 
@@ -70,7 +78,7 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
             style={styles.menuItem}
             onPress={() => handleNavigate('/home')}
           >
-            <Icons.Home width={24} height={24} color="#333" />
+            <Icons.HomeBlack width={24} height={24} color="#333" />
             <Text style={styles.menuText}>Início</Text>
           </TouchableOpacity>
 
@@ -78,7 +86,7 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
             style={styles.menuItem}
             onPress={() => router.replace("/(authenticated)/aboutUs/about-us")}
           >
-            <Icons.Usr width={24} height={24} color="#333" />
+            <Icons.UsrCirle width={24} height={24} color="#333" />
             <Text style={styles.menuText}>Sobre nós</Text>
           </TouchableOpacity>
 

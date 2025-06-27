@@ -4,6 +4,7 @@ import CrossCircle from './svg/cross-circle.svg';
 import Cross from './svg/cross.svg';
 import Hide from './svg/hide.svg';
 import Home from './svg/home.svg';
+import HomeBlack from './svg/home-black.svg';
 import ListPointers from './svg/list-pointers.svg';
 import LockOff from './svg/lock-off.svg';
 import LockOn from './svg/lock-on.svg';
@@ -23,6 +24,7 @@ const Icons = {
   Cross,
   Hide,
   Home,
+  HomeBlack,
   ListPointers,
   LockOff,
   LockOn,

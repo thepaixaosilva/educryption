@@ -11,7 +11,7 @@ interface UserActivity {
 export default interface User {
   id?: string;
   email: string;
-  fullName: string;
+  full_name: string;
   activities?: UserActivity[];
   units?: UserUnit[];
   comments: string[];
