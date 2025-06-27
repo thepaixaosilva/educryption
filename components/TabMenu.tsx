@@ -73,9 +73,9 @@ export default function TabMenu() {
         />
 
         <Tabs.Screen
-          name="user"
+          name="about-us"
           options={{
-            title: 'Perfil',
+            title: 'Sobre nós',
             tabBarIcon: (props) => <TabIcon icon={Icons.Usr} {...props} />,
             headerShown: false,
           }}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 50,
   },
   tabBarItem: {
     paddingVertical: 15,

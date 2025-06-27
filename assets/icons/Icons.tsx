@@ -14,6 +14,7 @@ import Show from './svg/show.svg';
 import ThreeDots from './svg/three-dots.svg';
 import UsrCirle from './svg/usr-circle.svg';
 import Usr from './svg/usr.svg';
+import Logout from './svg/logout.svg';
 
 const Icons = {
   ChkCircle,
@@ -32,6 +33,7 @@ const Icons = {
   ThreeDots,
   UsrCirle,
   Usr,
+  Logout,
 };
 
 export default Icons;
