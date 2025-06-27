@@ -76,7 +76,7 @@ export default function AppDrawer({ visible, onClose }: AppDrawerProps) {
 
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => handleNavigate('/about-us')}
+            onPress={() => router.replace("/(authenticated)/aboutUs/about-us")}
           >
             <Icons.Usr width={24} height={24} color="#333" />
             <Text style={styles.menuText}>Sobre nós</Text>
